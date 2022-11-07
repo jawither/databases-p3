@@ -47,6 +47,88 @@ public class GetData {
         try (Statement stmt = oracleConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
             // Your implementation goes here....
             
+            ResultSet rst = stmt.executeQuery(
+                    "SELECT * FROM " + userTableName);
+
+            while (rst.next()) {
+
+                // get basic user info ---------------------------------------------------------------------------------------
+                JSONObject newUser = new JSONObject();
+                long id = rst.getLong(1);
+                newUser.put("user_id", id);
+                newUser.put("first_name", rst.getString(2));
+                newUser.put("last_name", rst.getString(3));
+                newUser.put("YOB", rst.getLong(4));
+                newUser.put("MOB", rst.getLong(5));
+                newUser.put("DOB", rst.getLong(6));
+                newUser.put("gender", rst.getString(7));
+
+                // get user friends -------------------------------------------------------------------------------------------
+                try (Statement friends_stmt = oracleConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+
+                    ResultSet friends_rst = friends_stmt.executeQuery(
+                            "SELECT USER2_ID FROM " + friendsTableName + " WHERE USER1_ID = " + id);
+
+                    JSONArray friendsArray = new JSONArray();
+                    while (friends_rst.next()) {
+                        friendsArray.put(friends_rst.getLong(1));
+                    }
+
+                    newUser.put("friends", friendsArray);
+
+                    friends_stmt.close();
+                } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
+
+                // get user hometown -------------------------------------------------------------------------------------------
+                try (Statement home_stmt = oracleConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+
+                    ResultSet home_rst = home_stmt.executeQuery(
+                            "select city_name, state_name, country_name " + 
+                            "from " + hometownCityTableName + " u, " + cityTableName + " c " + 
+                            "where u.hometown_city_id = c.city_id " + 
+                            "and u.user_id = " + id);
+
+                    JSONObject hometown = new JSONObject();
+                    while (home_rst.next()) {
+                        hometown.put("city", home_rst.getString(1));
+                        hometown.put("state", home_rst.getString(2));
+                        hometown.put("country", home_rst.getString(3));
+                    }
+
+                    newUser.put("hometown", hometown);
+                    
+                    home_stmt.close();
+                } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
+
+                // get user current city -------------------------------------------------------------------------------------------
+                try (Statement cur_stmt = oracleConnection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+
+                    ResultSet cur_rst = cur_stmt.executeQuery(
+                            "select city_name, state_name, country_name " + 
+                            "from " + currentCityTableName + " u, " + cityTableName + " c " + 
+                            "where u.current_city_id = c.city_id " + 
+                            "and u.user_id = " + id);
+
+                    JSONObject current = new JSONObject();
+                    while (cur_rst.next()) {
+                        current.put("city", cur_rst.getString(1));
+                        current.put("state", cur_rst.getString(2));
+                        current.put("country", cur_rst.getString(3));
+                    }
+
+                    newUser.put("current", current);
+                    
+                    cur_stmt.close();
+                } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
+
+                users_info.put(newUser);
+            }
             
             stmt.close();
         } catch (SQLException e) {
