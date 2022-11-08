@@ -32,9 +32,12 @@ function oldest_friend(dbname) {
             }
         });
 
-        if (oldest_year != -1)
+        if (oldest_year != -1) {
             results[user.user_id] = oldest_user;
+            print(user.user_id + " " + oldest_user);
+        }
+            
     });
-    print(results);
+    //print(results);
     return results;
 }
