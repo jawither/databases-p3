@@ -15,6 +15,7 @@ function oldest_friend(dbname) {
     db.users.find().forEach(function(user) {
         var oldest_year = -1;
         var oldest_user;
+
         db.users.find().forEach(function(friend) {
             if (friend.friends.indexOf(user.user_id) != -1) {
                 if (friend.YOB < oldest_year || oldest_year == -1) {
@@ -25,14 +26,15 @@ function oldest_friend(dbname) {
         });
 
         user.friends.forEach(function(friend) {
-            if (friend.YOB < oldest_year) {
+            if (friend.YOB < oldest_year || oldest_year == -1) {
                 oldest_year = friend.YOB;
                 oldest_user = friend.user_id;
             }
         });
 
-        results[user.user_id] = oldest_user;
+        if (oldest_year != -1)
+            results[user.user_id] = oldest_user;
     });
-
+    print(results);
     return results;
 }
