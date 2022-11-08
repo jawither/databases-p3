@@ -19,6 +19,34 @@ function suggest_friends(year_diff, dbname) {
 
     let pairs = [];
     // TODO: implement suggest friends
+    db.users.find(
+        {gender: "male"}
+    ).forEach(function(m) {
+        db.users.find(
+            {gender: "female"}
+        ).forEach(function(f) {
+            var age = false;
+            var friends = false;
+            var town = false;
+
+            if (Math.abs(m.YOB - f.YOB) < year_diff) {
+                age = true;
+            }
+
+            if (m.friends.indexOf(f.user_id) == -1 && f.friends.indexOf(m.user_id) == -1) {
+                friends = true;
+            }
+
+            if (m.hometown.city == f.hometown.city) {
+                town = true;
+            }
+
+            if (age && friends && town) {
+                pairs.push([m.user_id, f.user_id]);
+            }
+
+        });
+    });
 
     return pairs;
 }
