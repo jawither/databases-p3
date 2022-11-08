@@ -33,12 +33,19 @@ function oldest_friend(dbname) {
             }
         });
 
-        user.friends.forEach(function(friend) {
-            if (friend.YOB < oldest_year || oldest_year == -1) {
-                print ("foundB");
-                oldest_year = friend.YOB;
-                oldest_user = friend.user_id;
-            }
+        user.friends.forEach(function(friend_id) {
+            db.users.find(
+                {user_id: friend_id}
+            ).forEach(function(friend) {
+                if (friend.YOB < oldest_year || oldest_year == -1) {
+                    print ("foundB");
+                    oldest_year = db.users.find(
+                        {user_id: friend},
+                        {YOB: 1, _id: 0}
+                    );
+                    oldest_user = friend;
+                }
+            });
         });
 
         if (oldest_year != -1) {
