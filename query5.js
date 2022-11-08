@@ -25,11 +25,9 @@ function oldest_friend(dbname) {
         });
 
         user.friends.forEach(function(friend) {
-            if (friend.friends.indexOf(user.user_id) != -1) {
-                if (friend.YOB < oldest_year) {
-                    oldest_year = friend.YOB;
-                    oldest_user = friend.user_id;
-                }
+            if (friend.YOB < oldest_year) {
+                oldest_year = friend.YOB;
+                oldest_user = friend.user_id;
             }
         });
 
