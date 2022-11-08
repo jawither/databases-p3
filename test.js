@@ -1,7 +1,7 @@
 (function () {
     // fill in your database name
     // Your dbname is your uniqname
-    let dbname = "uniqname";
+    let dbname = "jawither";
 
     load("query1.js");
     load("query2.js");

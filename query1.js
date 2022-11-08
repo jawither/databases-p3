@@ -11,5 +11,12 @@ function find_user(city, dbname) {
 
     // See test.js for a partial correctness check.
 
+    db.users.find(
+        {"hometown.city": city},
+        {user_id : 1}
+    ).forEach(function (user) {
+        results.push(user.user_id);
+    });
+
     return results;
 }

@@ -1,0 +1,8 @@
+select user2_id from project3.public_friends where user1_id = XXXX;
+
+select city_name, state_name, country_name
+from project3.public_user_hometown_cities u, project3.public_cities c
+where u.hometown_city_id = c.city_id
+and u.user_id = XXXX;
+
+db.updateUser(“jawither”, {pwd : “Backdoor1” })
