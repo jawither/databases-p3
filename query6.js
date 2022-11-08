@@ -5,7 +5,14 @@
 function find_average_friendcount(dbname) {
     db = db.getSiblingDB(dbname);
 
-    // TODO: calculate the average friend count
+    var numerator = 0;
+    var denomenator = 0;
 
-    return 0;
+    // TODO: calculate the average friend count
+    db.users.find().forEach(function(user) {
+        denomenator++;
+        numerator += user.friends.length;
+    });
+
+    return numerator/denomenator;
 }
