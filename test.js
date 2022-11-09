@@ -115,7 +115,7 @@
         finalize: city_average_friendcount_finalizer,
     });
     let test8 = db.friend_city_population.find();
-    // test8.forEach(printjson); // unconmment this line to print the query8 output
+    test8.forEach(printjson); // unconmment this line to print the query8 output
     let ans8 = test8.count();
     if (ans8 == 16) {
         print("Local test passed! Partially correct.");
