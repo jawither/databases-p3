@@ -47,6 +47,8 @@ function oldest_friend(dbname) {
             if (check(friend.user_id, oldest_year, has_friend)) {
                 oldest_user = friend.user_id;
                 oldest_year = get_yob(friend.user_id);
+                if (user.user_id == 799)
+                    print (oldest_year);
             }
             has_friend = true;
         });
