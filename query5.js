@@ -52,7 +52,7 @@ function oldest_friend(dbname) {
         });
 
         if (has_friend)
-            results[user] = oldest_user;
+            results[user.user_id] = oldest_user;
             
     });
     //print(results);
