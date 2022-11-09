@@ -7,49 +7,42 @@
 // You should return something like this (order does not matter):
 // {user1:userx1, user2:userx2, user3:userx3,...}
 
+function get_yob(id) {
+    db.users.find(
+        {user_id: user_id}
+    ).forEach(function(user) {
+        return user.YOB;
+    });
+}
+
 function oldest_friend(dbname) {
     db = db.getSiblingDB(dbname);
 
     let results = {};
     // TODO: implement oldest friends
     
-    // db.users.aggregate([
-    //     {$project: {user_id: 1, friends: 1, _id: 0}},
-    //     {$unwind: "$friends"},
-    //     {$out: "flat_users"}
-    // ]);
+    db.users.aggregate([
+        {$project: {user_id: 1, friends: 1, _id: 0}},
+        {$unwind: "$friends"},
+        {$out: "flat_users"}
+    ]);
 
     db.users.find().forEach(function(user) {
-        var oldest_year = -1;
+        var has_friend = false;
+        var oldest_year;
         var oldest_user;
 
-        db.users.find().forEach(function(friend) {
-            if (friend.friends.indexOf(user.user_id) != -1) {
-                if (friend.YOB < oldest_year || oldest_year == -1) {
-                    if (oldest_year == -1 || oldest_user > friend.user_id) {
-                        oldest_year = friend.YOB;
-                        oldest_user = friend.user_id;
-                    }
-                }
+        db.flat_users.find(
+            {friends: user.user_id}
+        ).forEach(function(friend) {
+            if ((!has_friend) ||
+                (get_yob(friend) < oldest_year) ||
+                ((get_yob(friend) == oldest_year) && (friend < oldest_friend))) {
+                    oldest_year = get_yob(friend);
+                    oldest_user = friend;
             }
+            has_friend = true;
         });
-
-        user.friends.forEach(function(friend_id) {
-            db.users.find(
-                {user_id: friend_id}
-            ).forEach(function(friend) {
-                if (friend.YOB < oldest_year || oldest_year == -1) {
-                    if (oldest_year == -1 || oldest_user > friend.user_id) {
-                        oldest_year = friend.YOB;
-                        oldest_user = friend.user_id;
-                    }
-                }
-            });
-        });
-
-        if (oldest_year != -1) {
-            results[user.user_id] = oldest_user;
-        }
             
     });
     //print(results);
