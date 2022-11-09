@@ -15,6 +15,15 @@ function get_yob(id) {
     });
 }
 
+function check(friend, oldest_year, has_friend) {
+    if ((!has_friend) ||
+        (get_yob(friend) < oldest_year) ||
+        ((get_yob(friend) == oldest_year) && (friend < oldest_friend))) {
+            return true;
+    }
+    return false;
+}
+
 function oldest_friend(dbname) {
     db = db.getSiblingDB(dbname);
 
@@ -35,11 +44,9 @@ function oldest_friend(dbname) {
         db.flat_users.find(
             {friends: user.user_id}
         ).forEach(function(friend) {
-            if ((!has_friend) ||
-                (get_yob(friend) < oldest_year) ||
-                ((get_yob(friend) == oldest_year) && (friend < oldest_friend))) {
-                    oldest_year = get_yob(friend);
-                    oldest_user = friend;
+            if (check(friend)) {
+                oldest_friend = friend;
+                oldest_year = get_yob(friend);
             }
             has_friend = true;
         });
