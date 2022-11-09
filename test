@@ -8,6 +8,6 @@ and u.user_id = XXXX;
 db.updateUser(“jawither”, {pwd : “Backdoor1” })
 
 db.users.find(
-    {MOB: 9},
-    {user_id: 1, MOB: 1, _id:0}
+    {"hometown.city": "Bucklebury"},
+    {friends:1, _id:0}
 )
