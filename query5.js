@@ -33,7 +33,8 @@ function oldest_friend(dbname) {
     db.users.aggregate([
         {$project: {user_id: 1, friends: 1, _id: 0}},
         {$unwind: "$friends"},
-        {$out: "flat_users"}
+        //{$group : {_id: "$friends", friends: {$push: "$user_id"}}},
+        {$out: "low_friends"}
     ]);
 
     db.users.find().forEach(function(user) {
@@ -41,22 +42,20 @@ function oldest_friend(dbname) {
         var oldest_year;
         var oldest_user;
 
-        db.flat_users.find(
-            {friends: user.user_id}
-        ).forEach(function(friend) {
-            if (check(friend.user_id, oldest_year, has_friend)) {
-                oldest_user = friend.user_id;
-                oldest_year = get_yob(friend.user_id);
-                if (user.user_id == 799)
-                    print (oldest_year);
-            }
-            has_friend = true;
-        });
-
         user.friends.forEach(function(friend) {
             if (check(friend, oldest_year, has_friend)) {
                 oldest_user = friend;
                 oldest_year = get_yob(friend);
+            }
+            has_friend = true;
+        });
+
+        db.low_friends.find(
+            {friends: user_id}
+        ).forEach(function(friend) {
+            if (check(friend.user_id, oldest_year, has_friend)) {
+                oldest_user = friend.user_id;
+                oldest_year = get_yob(friend.user_id);
             }
             has_friend = true;
         });
