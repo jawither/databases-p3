@@ -43,6 +43,9 @@ function oldest_friend(dbname) {
             }
             has_friend = true;
         });
+
+        if (has_friend)
+            results[user] = oldest_user;
             
     });
     //print(results);
