@@ -44,7 +44,7 @@ function oldest_friend(dbname) {
         db.flat_users.find(
             {friends: user.user_id}
         ).forEach(function(friend) {
-            if (check(friend.user_id)) {
+            if (check(friend.user_id, oldest_year, has_friend)) {
                 oldest_user = friend.user_id;
                 oldest_year = get_yob(friend.user_id);
             }
@@ -52,7 +52,7 @@ function oldest_friend(dbname) {
         });
 
         user.friends.forEach(function(friend) {
-            if (check(friend)) {
+            if (check(friend, oldest_year, has_friend)) {
                 oldest_user = friend;
                 oldest_year = get_yob(friend);
             }
