@@ -9,7 +9,7 @@
 
 function get_yob(id) {
     db.users.find(
-        {user_id: user_id}
+        {user_id: id}
     ).forEach(function(user) {
         return user.YOB;
     });
