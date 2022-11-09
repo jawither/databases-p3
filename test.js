@@ -63,26 +63,26 @@
         print("Expected 87 pairs of suggested friends, you found", ans4, "pairs.");
     }
 
-    print("=== Test5 === (This test is time comsuming)");
-    let test5 = oldest_friend(dbname);
-    // printjson(test5); // uncomment this line to print the query5 output
-    if (Object.keys(test5).length == 798) {
-        if (test5.hasOwnProperty(799)) {
-            let ans5 = test5[799];
-            if (test5[799] == 51) {
-                print("Local test passed! Partially correct.");
-            } else {
-                print("Local test failed!");
-                print("Expected oldest friend for user 799 to be 51, you found", ans5, ".");
-            }
-        } else {
-            print("Local test failed!");
-            print("Expected oldest friend for user 799 to be 51. You found no oldest friend for user 799.");
-        }
-    } else {
-        print("Local test failed!");
-        print("Expected 798 users, you found", Object.keys(test5).length, "users.");
-    }
+    // print("=== Test5 === (This test is time comsuming)");
+    // let test5 = oldest_friend(dbname);
+    // // printjson(test5); // uncomment this line to print the query5 output
+    // if (Object.keys(test5).length == 798) {
+    //     if (test5.hasOwnProperty(799)) {
+    //         let ans5 = test5[799];
+    //         if (test5[799] == 51) {
+    //             print("Local test passed! Partially correct.");
+    //         } else {
+    //             print("Local test failed!");
+    //             print("Expected oldest friend for user 799 to be 51, you found", ans5, ".");
+    //         }
+    //     } else {
+    //         print("Local test failed!");
+    //         print("Expected oldest friend for user 799 to be 51. You found no oldest friend for user 799.");
+    //     }
+    // } else {
+    //     print("Local test failed!");
+    //     print("Expected 798 users, you found", Object.keys(test5).length, "users.");
+    // }
 
     print("=== Test 6 ===");
     let ans6 = find_average_friendcount(dbname);
@@ -100,7 +100,7 @@
         finalize: num_month_finalizer,
     });
     let test7 = db.born_each_month.find();
-    // test7.forEach(printjson); // uncomment this line to print the query7 output
+    test7.forEach(printjson); // uncomment this line to print the query7 output
     let ans7 = test7.count();
     if (ans7 == 12) {
         print("Local test passed! Partially correct.");
