@@ -2,16 +2,19 @@
 // Find the city average friend count per user using MapReduce.
 
 let city_average_friendcount_mapper = function () {
-    // TODO: Implement the map function
+    emit (this.hometown.city, {users : 1, friends: this.friends.length})
 };
 
 let city_average_friendcount_reducer = function (key, values) {
-    // TODO: Implement the reduce function
+    var users = 0;
+    var friends = 0;
+    values.forEach(function(value) {
+        users += value.users;
+        friends += value.friends;
+    });
+    return {users: users, friends: friends};
 };
 
 let city_average_friendcount_finalizer = function (key, reduceVal) {
-    // We've implemented a simple forwarding finalize function. This implementation
-    // is naive: it just forwards the reduceVal to the output collection.
-    // TODO: Feel free to change it if needed.
-    return reduceVal;
+    return reduceVal.friends / reduceVal.users;
 };
