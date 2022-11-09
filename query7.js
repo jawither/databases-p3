@@ -6,7 +6,7 @@ let num_month_mapper = function () {
 };
 
 let num_month_reducer = function (key, values) {
-    return values;
+    return Array.length(values);
 };
 
 let num_month_finalizer = function (key, reduceVal) {
