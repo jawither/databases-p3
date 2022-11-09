@@ -6,11 +6,11 @@ let num_month_mapper = function () {
 };
 
 let num_month_reducer = function (key, values) {
-    var test = "";
+    var output = 0;
     values.forEach(function(value) {
-        test += value += " ";
+       output++;
     })
-    return test;
+    return output;
 };
 
 let num_month_finalizer = function (key, reduceVal) {
