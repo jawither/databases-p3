@@ -51,6 +51,14 @@ function oldest_friend(dbname) {
             has_friend = true;
         });
 
+        user.friends.forEach(function(friend) {
+            if (check(friend)) {
+                oldest_user = friend;
+                oldest_year = get_yob(friend);
+            }
+            has_friend = true;
+        });
+
         if (has_friend)
             results[user.user_id] = oldest_user;
             
