@@ -17,10 +17,10 @@ function get_yob(id) {
     return output;
 }
 
-function check(friend, oldest_year, has_friend) {
+function check(friend, oldest_year, has_friend, oldest_user) {
     if ((!has_friend) ||
         (get_yob(friend) < oldest_year) ||
-        ((get_yob(friend) == oldest_year) && (friend < oldest_friend))) {
+        ((get_yob(friend) == oldest_year) && (friend < oldest_user))) {
             return true;
     }
     return false;
@@ -39,15 +39,12 @@ function oldest_friend(dbname) {
         {$out: "low_friends"}
     ]);
 
-    print("umm hello");
-
     db.users.find().forEach(function(user) {
         var has_friend = false;
         var oldest_year = -999;
         var oldest_user = -999;
         user.friends.forEach(function(friend) {
-            
-            if (check(friend, oldest_year, has_friend)) {
+            if (check(friend, oldest_year, has_friend, oldest_user)) {
                 oldest_user = friend;
                 oldest_year = get_yob(friend);
             }
@@ -58,7 +55,7 @@ function oldest_friend(dbname) {
             {_id: user.user_id}
         ).forEach(function(user) {
             user.friends.forEach(function(friend) {
-                if (check(friend, oldest_year, has_friend)) {
+                if (check(friend, oldest_year, has_friend, oldest_user)) {
                     oldest_user = friend;
                     oldest_year = get_yob(friend);
                 }
