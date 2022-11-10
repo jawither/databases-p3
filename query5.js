@@ -8,11 +8,13 @@
 // {user1:userx1, user2:userx2, user3:userx3,...}
 
 function get_yob(id) {
+    var output;
     db.users.find(
         {user_id: id}
     ).forEach(function(user) {
-        return user.YOB;
+        output = user.YOB;
     });
+    return output;
 }
 
 function check(friend, oldest_year, has_friend) {
