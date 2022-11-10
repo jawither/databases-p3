@@ -37,15 +37,17 @@ function oldest_friend(dbname) {
         {$out: "low_friends"}
     ]);
 
+    print("umm hello");
+
     db.users.find().forEach(function(user) {
         var has_friend = false;
         var oldest_year;
         var oldest_user;
-
+        if (user.user_id == 799) {
+            print ("hi");
+        }
         user.friends.forEach(function(friend) {
-            if (user.user_id == 799) {
-                print ("hi");
-            }
+            
             if (check(friend, oldest_year, has_friend)) {
                 if (user.user_id == 799) {
                     print ("changing from user " + oldest_user + ", year " + oldest_year + ", to user " + friend + " , year " + get_yob(friend));
