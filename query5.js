@@ -29,6 +29,10 @@ function oldest_friend(dbname) {
 
     let results = {};
     // TODO: implement oldest friends
+
+    print ("expected: 684, actual: " + get_yob(10));
+    print ("expected: 437, actual: " + get_yob(791));
+    print ("expected: 284, actual: " + get_yob(30));
     
     db.users.aggregate([
         {$project: {user_id: 1, friends: 1, _id: 0}},
