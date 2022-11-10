@@ -41,8 +41,8 @@ function oldest_friend(dbname) {
 
     db.users.find().forEach(function(user) {
         var has_friend = false;
-        var oldest_year;
-        var oldest_user;
+        var oldest_year = -999;
+        var oldest_user = -999;
         if (user.user_id == 799) {
             print ("hi");
         }
