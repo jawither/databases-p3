@@ -65,7 +65,7 @@
 
     print("=== Test5 === (This test is time comsuming)");
     let test5 = oldest_friend(dbname);
-     printjson(test5); // uncomment this line to print the query5 output
+    //printjson(test5); // uncomment this line to print the query5 output
     if (Object.keys(test5).length == 798) {
         if (test5.hasOwnProperty(799)) {
             let ans5 = test5[799];
@@ -100,7 +100,7 @@
         finalize: num_month_finalizer,
     });
     let test7 = db.born_each_month.find();
-    test7.forEach(printjson); // uncomment this line to print the query7 output
+    //test7.forEach(printjson); // uncomment this line to print the query7 output
     let ans7 = test7.count();
     if (ans7 == 12) {
         print("Local test passed! Partially correct.");
@@ -115,7 +115,7 @@
         finalize: city_average_friendcount_finalizer,
     });
     let test8 = db.friend_city_population.find();
-    test8.forEach(printjson); // unconmment this line to print the query8 output
+    //test8.forEach(printjson); // unconmment this line to print the query8 output
     let ans8 = test8.count();
     if (ans8 == 16) {
         print("Local test passed! Partially correct.");

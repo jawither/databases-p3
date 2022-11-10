@@ -31,10 +31,6 @@ function oldest_friend(dbname) {
 
     let results = {};
     // TODO: implement oldest friends
-
-    print ("expected: 684, actual: " + get_yob(10));
-    print ("expected: 437, actual: " + get_yob(791));
-    print ("expected: 284, actual: " + get_yob(30));
     
     db.users.aggregate([
         {$project: {user_id: 1, friends: 1, _id: 0}},
@@ -49,15 +45,9 @@ function oldest_friend(dbname) {
         var has_friend = false;
         var oldest_year = -999;
         var oldest_user = -999;
-        if (user.user_id == 799) {
-            print ("hi");
-        }
         user.friends.forEach(function(friend) {
             
             if (check(friend, oldest_year, has_friend)) {
-                if (user.user_id == 799) {
-                    print ("changing from user " + oldest_user + ", year " + oldest_year + ", to user " + friend + " , year " + get_yob(friend));
-                }
                 oldest_user = friend;
                 oldest_year = get_yob(friend);
             }
@@ -69,9 +59,6 @@ function oldest_friend(dbname) {
         ).forEach(function(user) {
             user.friends.forEach(function(friend) {
                 if (check(friend, oldest_year, has_friend)) {
-                    if (user._id == 799) {
-                        print ("changing from user " + oldest_user + ", year " + oldest_year + ", to user " + friend + " , year " + get_yob(friend));
-                    }
                     oldest_user = friend;
                     oldest_year = get_yob(friend);
                 }
